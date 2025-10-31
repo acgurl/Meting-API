@@ -27,4 +27,31 @@ if (fs.existsSync(sourceNodeFunctionsDir)) {
     }
 }
 
+// Also copy src directory to dist for imports
+const copyDirectory = (src, dest) => {
+    if (!fs.existsSync(dest)) {
+        fs.mkdirSync(dest, { recursive: true });
+    }
+
+    const entries = fs.readdirSync(src, { withFileTypes: true });
+
+    for (const entry of entries) {
+        const srcPath = path.join(src, entry.name);
+        const destPath = path.join(dest, entry.name);
+
+        if (entry.isDirectory()) {
+            copyDirectory(srcPath, destPath);
+        } else {
+            fs.copyFileSync(srcPath, destPath);
+        }
+    }
+};
+
+const srcDir = path.join(process.cwd(), 'src');
+const distSrcDir = path.join(distDir, 'src');
+if (fs.existsSync(srcDir)) {
+    copyDirectory(srcDir, distSrcDir);
+    console.log('Copied src directory to dist/');
+}
+
 console.log('EdgeOne Pages build completed!');
