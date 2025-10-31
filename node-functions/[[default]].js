@@ -1,18 +1,27 @@
 // 保留完整功能的 EdgeOne Pages 函数
-// 先尝试 Hono，如果不行就回退到原生实现
+// 避免使用 top-level await，改为同步导入或异步函数内导入
 
 import { nanoid } from 'nanoid'
 import crypto from 'crypto-browserify'
 import { Buffer } from 'buffer/index.js'
 
-// 尝试导入 Hono，如果失败就使用原生实现
-let Hono, cors, logger;
-try {
-  Hono = (await import('hono')).default;
-  cors = (await import('hono/cors')).cors;
-  logger = (await import('hono/logger')).logger;
-} catch (e) {
-  console.log('Hono import failed, using native implementation');
+// 避免在顶级使用 await，改为在函数内部动态导入
+let Hono = null;
+let cors = null;
+let logger = null;
+
+// 异步导入函数
+async function importHono() {
+  if (!Hono) {
+    try {
+      Hono = (await import('hono')).default;
+      cors = (await import('hono/cors')).cors;
+      logger = (await import('hono/logger')).logger;
+    } catch (e) {
+      console.log('Hono import failed, using native implementation');
+    }
+  }
+  return { Hono, cors, logger };
 }
 
 // NetEase crypto utilities
@@ -343,11 +352,14 @@ export default async function onRequest(context) {
     globalThis.process.env.YT_API = env.YT_API;
   }
 
+  // 在函数内部导入 Hono
+  const { Hono: HonoClass, cors: corsMiddleware, logger: loggerMiddleware } = await importHono();
+
   // 如果 Hono 可用，使用 Hono
-  if (Hono) {
-    const app = new Hono();
-    app.use('*', cors());
-    app.use('*', logger());
+  if (HonoClass) {
+    const app = new HonoClass();
+    app.use('*', corsMiddleware());
+    app.use('*', loggerMiddleware());
 
     app.get('/api', async (c) => {
       const query = c.req.query();
