@@ -4,7 +4,10 @@
       "WebFetch(domain:edgeone.cloud.tencent.com)",
       "mcp__web-search-prime__webSearchPrime",
       "WebFetch(domain:pages.edgeone.ai)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(npm run build:*)"
     ],
     "deny": [],
     "ask": []

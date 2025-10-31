@@ -20,6 +20,8 @@
     "vitest": "^0.29.2"
   },
   "dependencies": {
+    "buffer": "^6.0.3",
+    "crypto-browserify": "^3.12.1",
     "hono": "^4.1.0",
     "nanoid": "^4.0.0"
   }
