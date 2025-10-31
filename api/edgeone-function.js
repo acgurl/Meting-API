@@ -1,4 +1,3 @@
-import { onRequest } from '@vercel/edge';
 import app from '../app.js';
 
 export default async function onRequest(context) {

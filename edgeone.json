@@ -12,7 +12,7 @@
     {
       "source": "/",
       "destination": "/api",
-      "permanent": false
+      "statusCode": 307
     }
   ],
   "headers": [
