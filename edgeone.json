@@ -1,0 +1,37 @@
+{
+  "buildCommand": "npm run build:edgeone",
+  "outputDirectory": "dist",
+  "nodeVersion": "18.20.4",
+  "functions": {
+    "api": {
+      "runtime": "node",
+      "entrypoint": "api/edgeone-function.js"
+    }
+  },
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "/api",
+      "permanent": false
+    }
+  ],
+  "headers": [
+    {
+      "source": "/api",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        },
+        {
+          "key": "Access-Control-Allow-Methods",
+          "value": "GET, POST, OPTIONS"
+        },
+        {
+          "key": "Access-Control-Allow-Headers",
+          "value": "Content-Type"
+        }
+      ]
+    }
+  ]
+}

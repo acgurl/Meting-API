@@ -103,6 +103,21 @@ docker run -d --name meting -p 3000:3000 intemd/meting-api:latest
 
 一直下一步即可。
 
+### 部署到EdgeOne Pages
+
+腾讯云EdgeOne Pages提供的静态网站托管服务，支持Node函数和边缘函数。
+
+1. 在项目根目录创建 `edgeone.json` 配置文件（已包含）
+2. 将项目推送到GitHub仓库
+3. 在EdgeOne控制台中连接GitHub仓库
+4. 配置构建命令：`npm run build:edgeone`
+5. 设置输出目录：`dist`
+6. 配置环境变量（可选）：
+   - `OVERSEAS` - 国外部署模式（设为1）
+   - `YT_API` - YouTube Music API密钥
+
+EdgeOne Pages会自动检测配置并部署API函数。
+
 <details>
 
 <summary>Deprecated</summary>

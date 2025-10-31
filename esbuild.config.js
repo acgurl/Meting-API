@@ -67,3 +67,23 @@ await esbuild.build({
     ],
     // minify: true,
 });
+
+// EdgeOne Pages build
+await esbuild.build({
+    entryPoints: ['./api/edgeone-function.js'],
+    bundle: true,
+    format: 'esm',
+    outfile: './dist/edgeone-function.js',
+    external: ['@vercel/edge'],
+    plugins: [
+        resolve({
+            crypto: 'crypto-browserify'
+        }),
+        NodeGlobalsPolyfillPlugin({
+            process: true,
+            buffer: true,
+        }),
+        NodeModulesPolyfillPlugin(),
+    ],
+    minify: true,
+});
