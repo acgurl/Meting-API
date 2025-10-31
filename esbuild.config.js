@@ -68,22 +68,23 @@ await esbuild.build({
     // minify: true,
 });
 
-// EdgeOne Pages build
-await esbuild.build({
-    entryPoints: ['./api/edgeone-function.js'],
-    bundle: true,
-    format: 'esm',
-    outfile: './dist/edgeone-function.js',
-    external: ['@vercel/edge'],
-    plugins: [
-        resolve({
-            crypto: 'crypto-browserify'
-        }),
-        NodeGlobalsPolyfillPlugin({
-            process: true,
-            buffer: true,
-        }),
-        NodeModulesPolyfillPlugin(),
-    ],
-    minify: true,
-});
+// EdgeOne Pages build - copy node-functions to dist
+import fs from 'fs';
+import path from 'path';
+
+// Ensure node-functions directory exists in dist
+const nodeFunctionsDir = path.join(process.cwd(), 'dist', 'node-functions');
+if (!fs.existsSync(nodeFunctionsDir)) {
+    fs.mkdirSync(nodeFunctionsDir, { recursive: true });
+}
+
+// Copy node-functions files to dist
+const sourceNodeFunctionsDir = path.join(process.cwd(), 'node-functions');
+if (fs.existsSync(sourceNodeFunctionsDir)) {
+    const files = fs.readdirSync(sourceNodeFunctionsDir);
+    for (const file of files) {
+        const sourcePath = path.join(sourceNodeFunctionsDir, file);
+        const destPath = path.join(nodeFunctionsDir, file);
+        fs.copyFileSync(sourcePath, destPath);
+    }
+}

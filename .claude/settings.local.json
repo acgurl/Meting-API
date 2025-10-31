@@ -1,7 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "WebFetch(domain:edgeone.cloud.tencent.com)"
+      "WebFetch(domain:edgeone.cloud.tencent.com)",
+      "mcp__web-search-prime__webSearchPrime",
+      "WebFetch(domain:pages.edgeone.ai)"
     ],
     "deny": [],
     "ask": []
