@@ -1,13 +1,10 @@
 {
   "name": "meting-backend-js",
   "version": "1.1.2",
-  "description": "",
-  "main": "node.js",
+  "description": "统一的音乐API服务，专为EdgeOne Pages部署优化",
+  "main": "app.js",
   "scripts": {
-    "build:all": "node esbuild.config.js",
-    "build:edgeone": "node esbuild.config.js",
-    "start:node": "node node.js",
-    "start:deno": "deno run --allow-net --allow-env dist/deno.js",
+    "build": "node esbuild.config.js",
     "test": "vitest run",
     "patch": "npm version patch && git push origin main && git push origin --tags",
     "minor": "npm version minor && git push origin main && git push origin --tags",
@@ -20,18 +17,9 @@
   "author": "xizeyoupan",
   "license": "MIT",
   "devDependencies": {
-    "esbuild-plugin-resolve": "^1.0.3",
-    "esbuild-plugin-text-replace": "^1.2.0",
     "vitest": "^0.29.2"
   },
   "dependencies": {
-    "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
-    "@esbuild-plugins/node-modules-polyfill": "^0.2.2",
-    "@hono/node-server": "^1.8.2",
-    "@vercel/edge": "^1.1.1",
-    "buffer": "^6.0.3",
-    "crypto-browserify": "^3.12.0",
-    "esbuild": "0.17.5",
     "hono": "^4.1.0",
     "nanoid": "^4.0.0"
   }
